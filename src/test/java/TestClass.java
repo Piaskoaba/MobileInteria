@@ -4,6 +4,7 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.reporters.jq.Main;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class TestClass {
     protected static AndroidDriver driver;
     PageService pageService;
+    MainPage mainPage;
 
     @BeforeMethod
     public void runMessage() throws MalformedURLException {
@@ -27,11 +29,19 @@ public class TestClass {
     @Test
     public void openApp() throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
+        MainPage mainPage = new MainPage(driver);
         PageService pageService= new PageService(driver);
         Thread.sleep(1000);
         String myLogin = pageService.getCredentialValue("login");
         String myPassword = pageService.getCredentialValue("eMailPassword");
         loginPage.fillLoginWindow(myLogin);
+        loginPage.fillPasswordWindow(myPassword);
+        loginPage.clickLoginButton();
+        Thread.sleep(4000);
+        mainPage = loginPage.goToApp();
+
+
+
 
     }
 }
