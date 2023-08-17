@@ -38,6 +38,7 @@ public class LoginPage extends BasePage{
     @FindBy(id="pl.interia.poczta_next:id/acceptButton")
     MobileElement cookieButton;
     public MainPage goToApp() throws InterruptedException {
+        Thread.sleep(5000);
         wait.until(ExpectedConditions.elementToBeClickable(cookieButton));
         cookieButton.click();
         return new MainPage(driver);
