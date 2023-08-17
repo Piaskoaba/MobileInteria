@@ -1,13 +1,14 @@
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -17,10 +18,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 public class PageService {
 
@@ -186,12 +184,17 @@ public class PageService {
         return lines.get(random.nextInt(lines.size()));
     }
 
+    public void returnButton() {
+        WebElement preferenceOption = driver.findElementByAccessibilityId("Preference");
+        preferenceOption.click();
+        driver.pressKey(new KeyEvent(AndroidKey.ENTER));
+    }
+
     public void scroll(String visibleText) {
         driver.findElementByAndroidUIAutomator(
                 "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().description(\""
                         + visibleText + "\").instance(0))");
     }
-
 
     protected void swipeByPercentage(double startXpercentage, double startYpercentage, double endXpercentage, double endYpercentage) {
         Dimension size = driver.manage().window().getSize();
@@ -228,6 +231,14 @@ public class PageService {
 
     protected void swipeUp(double endYpercentage) {
         this.swipeByPercentage(0.5, 0.8, 0.5, 0.8 - 0.8 * endYpercentage);
+    }
+
+    public void screenShoot() throws IOException {
+        File file = driver.getScreenshotAs(OutputType.FILE);
+        String uuid = UUID.randomUUID().toString();
+        FileUtils.copyFile(file, new File("src/test/resources/" + uuid + "screenshoot.png"));
+        System.out.println("====>WYKONAŁEM ZRZUT EKRANU<=======");
+        System.out.println("Plik zapisany pod nazwą: " + uuid + "screenshoot.png");
     }
 }
 

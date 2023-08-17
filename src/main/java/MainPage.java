@@ -15,14 +15,14 @@ public class MainPage extends BasePage {
     }
 
     Wait wait = new WebDriverWait(driver, 10);
-
     @FindBy(xpath = "//android.widget.Button[@index='1' and @package='pl.interia.poczta_next']")
     MobileElement closeMicWindow;
-    @FindBy(xpath ="//android.widget.Button[@index='0' and @package='pl.interia.poczta_next']" )
+    @FindBy(xpath = "//android.widget.Button[@index='0' and @package='pl.interia.poczta_next']")
     MobileElement openLeftMenuButton;
     @FindBy(xpath = "//*[contains(@text,'Kontakty')]")
     MobileElement contacts;
-
+    @FindBy(xpath = "//android.widget.Button[@index='5' and @package='pl.interia.poczta_next']")
+    MobileElement newMessageButton;
 
     public void clickCloseMic() throws InterruptedException {
         webDriverWait.until(ExpectedConditions.visibilityOf(closeMicWindow));
@@ -41,5 +41,9 @@ public class MainPage extends BasePage {
         return new ContactPage(driver);
     }
 
-
+    public NewMessagePage clickNewMessageButton() {
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(newMessageButton));
+        newMessageButton.click();
+        return new NewMessagePage(driver);
+    }
 }
