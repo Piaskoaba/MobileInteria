@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -40,10 +41,10 @@ public class TestClass {
         loginPage.fillLoginWindow(myLogin);
         loginPage.fillPasswordWindow(myPassword);
         loginPage.clickLoginButton();
-        Assert.assertTrue(loginPage.isGoToAppButtonVisible(),"Przycisk 'GoToApp' nie jest widoczny");
+        Assert.assertTrue(loginPage.isGoToAppButtonVisible(), "Przycisk 'GoToApp' nie jest widoczny");
         pageService.swipeUp(5);
         mainPage = loginPage.clickRemindMeLaterNutton();
-        Assert.assertTrue(mainPage.isNewMessageButtonVisible(),"Przycisk nowej wiadomości nie jest widoczny");
+        Assert.assertTrue(mainPage.isNewMessageButtonVisible(), "Przycisk nowej wiadomości nie jest widoczny");
         mainPage.clickCloseMic();
         pageService.swipeUp(7);
         pageService.swipeDown(3);
@@ -58,10 +59,10 @@ public class TestClass {
         loginPage.fillLoginWindow(myLogin);
         loginPage.fillPasswordWindow(myPassword);
         loginPage.clickLoginButton();
-        Assert.assertTrue(loginPage.isGoToAppButtonVisible(),"Przycisk 'GoToApp' nie jest widoczny");
+        Assert.assertTrue(loginPage.isGoToAppButtonVisible(), "Przycisk 'GoToApp' nie jest widoczny");
         pageService.swipeUp(5);
         mainPage = loginPage.clickRemindMeLaterNutton();
-        Assert.assertTrue(mainPage.isNewMessageButtonVisible(),"Przycisk nowej wiadomości nie jest widoczny");
+        Assert.assertTrue(mainPage.isNewMessageButtonVisible(), "Przycisk nowej wiadomości nie jest widoczny");
         mainPage.clickCloseMic();
         mainPage.clickOpenLeftMenu();
         Thread.sleep(2000);
@@ -75,8 +76,9 @@ public class TestClass {
         contactPage.clickSaveButton();
         pageService.screenShoot();
     }
+
     @Test
-    public void testFailedScreenshootTest() throws InterruptedException { //testListener
+    public void testFailedScreenshootTest() { //testListener
         LoginPage loginPage = new LoginPage(driver);
         PageService pageService = new PageService(driver);
         String myLogin = pageService.getCredentialValue("login");
@@ -84,9 +86,10 @@ public class TestClass {
         loginPage.fillLoginWindow(myLogin);
         loginPage.fillPasswordWindow(myPassword);
         loginPage.clickLoginButton();
-        Assert.assertTrue(loginPage.isGoToAppButtonVisible(),"Przycisk 'GoToApp' nie jest widoczny");
+        Assert.assertTrue(loginPage.isGoToAppButtonVisible(), "Przycisk 'GoToApp' nie jest widoczny");
         String text = contactPage.contactNameWindow.getText(); //Linia kodu, która przerwie test, wykona się screenshoot momentu, w którym wystąpił błąd
     }
+
     @Test
     public void sendMessage() throws InterruptedException, IOException {
         LoginPage loginPage = new LoginPage(driver);
@@ -96,10 +99,10 @@ public class TestClass {
         loginPage.fillLoginWindow(myLogin);
         loginPage.fillPasswordWindow(myPassword);
         loginPage.clickLoginButton();
-        Assert.assertTrue(loginPage.isGoToAppButtonVisible(),"Przycisk 'GoToApp' nie jest widoczny");
+        Assert.assertTrue(loginPage.isGoToAppButtonVisible(), "Przycisk 'GoToApp' nie jest widoczny");
         pageService.swipeUp(5);
         mainPage = loginPage.clickRemindMeLaterNutton();
-        Assert.assertTrue(mainPage.isNewMessageButtonVisible(),"Przycisk nowej wiadomości nie jest widoczny");
+        Assert.assertTrue(mainPage.isNewMessageButtonVisible(), "Przycisk nowej wiadomości nie jest widoczny");
         mainPage.clickCloseMic();
         newMessagePage = mainPage.clickNewMessageButton();
         String name = pageService.getRandomValue(pageService.namesList());

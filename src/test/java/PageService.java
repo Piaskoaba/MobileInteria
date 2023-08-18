@@ -1,3 +1,4 @@
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
@@ -183,17 +184,15 @@ public class PageService {
         Random random = new Random();
         return lines.get(random.nextInt(lines.size()));
     }
-
-    public void returnButton() {
-        WebElement preferenceOption = driver.findElementByAccessibilityId("Preference");
-        preferenceOption.click();
-        driver.pressKey(new KeyEvent(AndroidKey.ENTER));
-    }
-
     public void scroll(String visibleText) {
         driver.findElementByAndroidUIAutomator(
                 "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().description(\""
                         + visibleText + "\").instance(0))");
+    }
+    public void scrollToElement(MobileElement element) {
+        driver.findElementByAndroidUIAutomator(
+                "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().description(\""
+                        + element + "\").instance(0))");
     }
 
     protected void swipeByPercentage(double startXpercentage, double startYpercentage, double endXpercentage, double endYpercentage) {
@@ -240,6 +239,9 @@ public class PageService {
         FileUtils.copyFile(file, new File("src/test/resources/" + uuid + "screenshoot.png"));
         System.out.println("====>WYKONAŁEM ZRZUT EKRANU<=======");
         System.out.println("Plik zapisany pod nazwą: " + uuid + "screenshoot.png");
+    }
+    public void returnButton(){
+        driver.pressKey(new KeyEvent(AndroidKey.BACK));
     }
 }
 
