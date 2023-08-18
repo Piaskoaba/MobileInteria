@@ -46,4 +46,12 @@ public class MainPage extends BasePage {
         newMessageButton.click();
         return new NewMessagePage(driver);
     }
+    public boolean isNewMessageButtonVisible(){
+        try {
+            webDriverWait.until(ExpectedConditions.visibilityOf(newMessageButton)).isDisplayed();
+            return true;
+        } catch (org.openqa.selenium.TimeoutException | org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
+    }
 }

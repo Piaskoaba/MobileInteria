@@ -18,6 +18,10 @@ public class LoginPage extends BasePage {
     MobileElement passwordWindow;
     @FindBy(id = "pl.interia.poczta_next:id/logIn")
     MobileElement loginButton;
+    @FindBy(id = "pl.interia.poczta_next:id/acceptButton")
+    MobileElement cookieButton;
+    @FindBy(xpath = "//*[contains(@text,'Przypomnij mi później')]")
+    MobileElement remindMeLaterButton;
 
     public void fillLoginWindow(String login) {
         wait.until(ExpectedConditions.visibilityOf(loginWindow));
@@ -36,13 +40,23 @@ public class LoginPage extends BasePage {
         loginButton.click();
     }
 
-    @FindBy(id = "pl.interia.poczta_next:id/acceptButton")
-    MobileElement cookieButton;
-
     public MainPage goToApp() throws InterruptedException {
         Thread.sleep(5000);
         wait.until(ExpectedConditions.elementToBeClickable(cookieButton));
         cookieButton.click();
+        return new MainPage(driver);
+    }
+    public boolean isGoToAppButtonVisible(){
+        try {
+            webDriverWait.until(ExpectedConditions.visibilityOf(cookieButton)).isDisplayed();
+            return true;
+        } catch (org.openqa.selenium.TimeoutException | org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
+    }
+    public MainPage clickRemindMeLaterNutton(){
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(remindMeLaterButton));
+        remindMeLaterButton.click();
         return new MainPage(driver);
     }
 }

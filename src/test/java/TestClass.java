@@ -2,6 +2,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -19,7 +20,7 @@ public class TestClass {
     NewMessagePage newMessagePage;
 
     @BeforeMethod
-    public void runMessage() throws MalformedURLException {
+    public void run() throws MalformedURLException {
         DesiredCapabilities cap = new DesiredCapabilities();
         cap.setCapability(MobileCapabilityType.DEVICE_NAME, "emu");
         cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
@@ -30,37 +31,37 @@ public class TestClass {
     }
 
     @Test
-    public void openApp() throws InterruptedException {
+    public void openAppAndSwipe() throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
-        MainPage mainPage = new MainPage(driver);
+        //MainPage mainPage = new MainPage(driver);
         PageService pageService = new PageService(driver);
-        //Thread.sleep(1000);
         String myLogin = pageService.getCredentialValue("login");
         String myPassword = pageService.getCredentialValue("eMailPassword");
         loginPage.fillLoginWindow(myLogin);
         loginPage.fillPasswordWindow(myPassword);
         loginPage.clickLoginButton();
-        //Thread.sleep(5000);
-        pageService.swipeUp(300);
-        Thread.sleep(3000);
-       // mainPage = loginPage.goToApp();
+        Assert.assertTrue(loginPage.isGoToAppButtonVisible(),"Przycisk 'GoToApp' nie jest widoczny");
+        pageService.swipeUp(5);
+        mainPage = loginPage.clickRemindMeLaterNutton();
+        Assert.assertTrue(mainPage.isNewMessageButtonVisible(),"Przycisk nowej wiadomości nie jest widoczny");
         mainPage.clickCloseMic();
+        pageService.swipeUp(7);
+        pageService.swipeDown(3);
     }
 
     @Test
     public void AddContactInApp() throws InterruptedException, IOException {
         LoginPage loginPage = new LoginPage(driver);
-        MainPage mainPage = new MainPage(driver);
         PageService pageService = new PageService(driver);
-        Thread.sleep(1000);
         String myLogin = pageService.getCredentialValue("login");
         String myPassword = pageService.getCredentialValue("eMailPassword");
         loginPage.fillLoginWindow(myLogin);
         loginPage.fillPasswordWindow(myPassword);
         loginPage.clickLoginButton();
-        Thread.sleep(3000);
-        pageService.swipeUp(300);
-        mainPage = loginPage.goToApp();
+        Assert.assertTrue(loginPage.isGoToAppButtonVisible(),"Przycisk 'GoToApp' nie jest widoczny");
+        pageService.swipeUp(5);
+        mainPage = loginPage.clickRemindMeLaterNutton();
+        Assert.assertTrue(mainPage.isNewMessageButtonVisible(),"Przycisk nowej wiadomości nie jest widoczny");
         mainPage.clickCloseMic();
         mainPage.clickOpenLeftMenu();
         Thread.sleep(2000);
@@ -77,36 +78,28 @@ public class TestClass {
     @Test
     public void testFailedScreenshootTest() throws InterruptedException { //testListener
         LoginPage loginPage = new LoginPage(driver);
-        MainPage mainPage = new MainPage(driver);
         PageService pageService = new PageService(driver);
-        //Thread.sleep(1000);
         String myLogin = pageService.getCredentialValue("login");
         String myPassword = pageService.getCredentialValue("eMailPassword");
         loginPage.fillLoginWindow(myLogin);
         loginPage.fillPasswordWindow(myPassword);
         loginPage.clickLoginButton();
-        String text = contactPage.contactNameWindow.getText();
-        //Thread.sleep(5000);
-        pageService.swipeUp(300);
-        Thread.sleep(3000);
-        // mainPage = loginPage.goToApp();
-        mainPage.clickCloseMic();
+        Assert.assertTrue(loginPage.isGoToAppButtonVisible(),"Przycisk 'GoToApp' nie jest widoczny");
+        String text = contactPage.contactNameWindow.getText(); //Linia kodu, która przerwie test, wykona się screenshoot momentu, w którym wystąpił błąd
     }
     @Test
     public void sendMessage() throws InterruptedException, IOException {
         LoginPage loginPage = new LoginPage(driver);
-        MainPage mainPage = new MainPage(driver);
         PageService pageService = new PageService(driver);
-        //Thread.sleep(1000);
         String myLogin = pageService.getCredentialValue("login");
         String myPassword = pageService.getCredentialValue("eMailPassword");
         loginPage.fillLoginWindow(myLogin);
         loginPage.fillPasswordWindow(myPassword);
         loginPage.clickLoginButton();
-        //Thread.sleep(5000);
-        pageService.swipeUp(300);
-        Thread.sleep(3000);
-        // mainPage = loginPage.goToApp();
+        Assert.assertTrue(loginPage.isGoToAppButtonVisible(),"Przycisk 'GoToApp' nie jest widoczny");
+        pageService.swipeUp(5);
+        mainPage = loginPage.clickRemindMeLaterNutton();
+        Assert.assertTrue(mainPage.isNewMessageButtonVisible(),"Przycisk nowej wiadomości nie jest widoczny");
         mainPage.clickCloseMic();
         newMessagePage = mainPage.clickNewMessageButton();
         String name = pageService.getRandomValue(pageService.namesList());
@@ -119,8 +112,6 @@ public class TestClass {
         newMessagePage.fillSubjectWindow(subject);
         newMessagePage.clickSendMessageButton();
         pageService.screenShoot();
-
-
-
     }
+
 }

@@ -6,7 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
-    protected AndroidDriver driver;
+    protected static AndroidDriver driver;
     protected WebDriverWait webDriverWait;
     private static final int TIMEOUT = 10;
 

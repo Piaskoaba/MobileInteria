@@ -233,7 +233,8 @@ public class PageService {
         this.swipeByPercentage(0.5, 0.8, 0.5, 0.8 - 0.8 * endYpercentage);
     }
 
-    public void screenShoot() throws IOException {
+    public void screenShoot() throws IOException, InterruptedException {
+        Thread.sleep(3000);
         File file = driver.getScreenshotAs(OutputType.FILE);
         String uuid = UUID.randomUUID().toString();
         FileUtils.copyFile(file, new File("src/test/resources/" + uuid + "screenshoot.png"));
